@@ -264,3 +264,7 @@ done
 La salida del script es enorme pero algunos de los nombres de los módulos disponibles pero no cargados son: 
 
 ![image](https://github.com/Jolx77/TP4-SistComp/assets/82000054/1d13a0f4-9283-4c1b-a3a7-4bbec3f34f8b)
+
+### hw-probe
+
+Link: https://linux-hardware.org/?probe=38438713ba
