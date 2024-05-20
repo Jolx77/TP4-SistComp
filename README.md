@@ -291,3 +291,10 @@ int main() {
 
 Vemos toda la lista de syscalls incluyendo execve, mmap, openat, etc.
 
+### segmentation faults 
+
+Los segmentation faults suceden cuando se intenta ingresar a un lugar de memoria indebido, sobre todo cuando se quiere escribir en lugares de solo lectura o los programas intentan acceder a segmentos de otros programas.
+
+Cuando esto sucede, el sistema envía una señal (SIGSEGV) a los programas que se están ejecutando. En caso de que los programas no tengan un handler de la señal, por default, el programa es finalizado, por otro lado, si se le ha determinado un handler el programa entra en esta sección y ejecuta lo que se indiqu
+
+
