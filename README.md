@@ -268,3 +268,26 @@ La salida del script es enorme pero algunos de los nombres de los módulos dispo
 ### hw-probe
 
 Link: https://linux-hardware.org/?probe=38438713ba
+
+### Diferencias entre módulo y programa
+
+La principal diferencia entre módulos y programas radica en el hecho de que los primero se ejecutan en el espacio del kernel con permisos de superusuario realizando tareas de sistema operativo delicadas. Por otro lado, los programas son ejecutables independientes que realizan diversas tareas a nivel de usuario que pueden comunicarse con el SO a través de ciertos mecanismos (como APIs) con tal de acceder a ciertos recursos de Hardware.
+
+A continuación se visualizan estas llamadas de sistema de un hello world escrito en C utilizando la herramienta strace:
+
+
+```c 
+#include <stdio.h>
+
+int main() {
+	printf("Hello, World!\n");
+	return 0;
+}
+
+
+```
+
+![image](https://github.com/Jolx77/TP4-SistComp/assets/82000054/85a745da-99f9-452b-98bc-930f6b26a7a0)
+
+Vemos toda la lista de syscalls incluyendo execve, mmap, openat, etc.
+
