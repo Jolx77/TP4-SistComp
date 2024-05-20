@@ -11,6 +11,14 @@ Aquí es donde checkinstall resulta útil. En lugar de usar make install, usas c
 
 2) ![alt text](image.png)
 
+## Desafío 1 (filminas)
+La firma del kernel es una característica de seguridad utilizada para garantizar la integridad y autenticidad tanto del kernel como de los módulos del kernel en Linux. A través de la firma digital, se asegura que el código del kernel y sus módulos no hayan sido modificados y que provengan de una fuente confiable.
+
+Luego de investigar sobre otros métodos de seguridad aplicable al kernel de nuestro sistema podemos destacar las siguientes:
+
+- *Kernel Hardening*: consiste en una serie de patches o modificaciones del kernel que aseguran mayor seguridad del mismo. Algunas de ellas son Grsecurity/PaX (mecanismos de protección de memoria).
+- *Mecanismos de control de acceso*: Podemos destacar sistemas MAC (mandatory access control) como lo son SELinux o AppArmor para reforzar las políticas de seguridad, y sistemas RBAC (Role-Based Access Control) con herramientas como pam_role roles y permisos dentro del sistema.
+- *Seccomp* (Secure Computing Mode): utilizado para restringir la cantidad de syscalls que un programa puede realizar
 
 
 ## Desafio 2:
@@ -198,3 +206,61 @@ Cómo Funcionan los Archivos de Dispositivo
 - Función en el Sistema
     - Interfaz Estándar: Los archivos de dispositivo proporcionan una interfaz estandarizada para que los programas puedan interactuar con el hardware sin necesidad de conocer los detalles específicos de su funcionamiento.
     - Abstracción de Hardware: Permiten que diferentes aplicaciones y servicios del sistema operen con el hardware de manera consistente y predecible.
+
+
+
+## Desafío Docs:
+
+### Modules info
+
+Podemos utilizar el comando modinfo para imprimir algunos detalles sobre el módulo especificado, en nuestro caso lo corremos con mimodulo.ko : 
+
+![image](https://github.com/Jolx77/TP4-SistComp/assets/82000054/711676d2-b74d-4114-b68d-e04065bf0220)
+
+
+En este caso podemos ver una serie de atributos sobre el módulo como lo son el path donde se encuentra localizado, el autor, una descripción del mismo (ambos datos cargados utilizando macros específicas), srcversion (un hash representando la versión del módulo), sus dependencias, el nombre y por último vermagic, que hace referencia a información sobre el kernel y compilador utilizados, asegurando compatibilidad.
+
+Por otro lado, al ejecutar el comando modinfo /lib/modules/$(uname -r)/kernel/crypto/des_generic.ko, veremos la salida con información sobre el módulo des_generic.ko, el cual se encarga de realizar tareas de encriptación, específicamente la implementación de los algoritmos DES (Data Encryption Standard) y Triple DES (3DES), formando parte de la API de criptografía del kernel.
+
+![image](https://github.com/Jolx77/TP4-SistComp/assets/82000054/95e0e8bf-46b4-4d77-803f-8219811b89ec)
+
+
+En este output vemos algunos de los mismos campos que con mimodulo pero propios del nuevo módulo analizado incluidos: 
+
+- alias : nombres alternativos para referenciar el módulo desde el sistema
+- retpoline (return trampoline) : técnica de mitigación de la vulnerabilidad Spectre v2 activada evitando el uso de instrucciones sobre ramas indirectas.
+- intree : es decir, incluido en el árbol fuente del kernel de Linux main, por lo que el módulo es mantenido y distribuido como parte de las versiones oficiales de Linux.
+- signer : entidad que firma el módulo.
+- sig_id: identifica de manera única la firma del módulo.
+- sig_key: identifica la llave utilizada para firmar el módulo.
+- sig_hashlogo : el algoritmo de hashing utilizado.
+- signature: la firma encriptada propiamente dicha.
+
+### Device drivers cargados y disponibles
+
+Para visualizar los drivers/módulos que se están utilizando en nuestras PC podemos utilizar el comando lsmod (list modules), consiguiendo un output como el siguiente, donde se alcanzan a ver los módulos, su tamaño y las instancias utilizadas del mismo: 
+
+![image](https://github.com/Jolx77/TP4-SistComp/assets/82000054/435da233-19d6-401a-b423-fde13563b565)
+
+Para visualizar los módulos disponibles pero q no estan cargados podemos utilizar un script escrito en bash que compare las salida de lsmod con las del comando find   /lib/modules/$(uname -r)/kernel/ -type f -name '*.ko', que lista todos los módulos guardados en el path indicado (donde comúnmente se guardan los módulos del kernel).
+
+```bash 
+#!/bin/bash
+
+# List all available modules
+available_modules=$(find /lib/modules/$(uname -r)/kernel/ -type f -name '*.ko' | sed 's/.*\///;s/\.ko//')
+
+# List all loaded modules
+loaded_modules=$(lsmod | awk 'NR>1 {print $1}')
+
+# Compare lists and show modules that are available but not loaded
+echo "Available but not loaded modules:"
+for module in $available_modules; do
+  if ! echo "$loaded_modules" | grep -qw "$module"; then
+	echo "$module"
+  fi
+done
+```
+La salida del script es enorme pero algunos de los nombres de los módulos disponibles pero no cargados son: 
+
+![image](https://github.com/Jolx77/TP4-SistComp/assets/82000054/1d13a0f4-9283-4c1b-a3a7-4bbec3f34f8b)
