@@ -297,4 +297,48 @@ Los segmentation faults suceden cuando se intenta ingresar a un lugar de memoria
 
 Cuando esto sucede, el sistema envía una señal (SIGSEGV) a los programas que se están ejecutando. En caso de que los programas no tengan un handler de la señal, por default, el programa es finalizado, por otro lado, si se le ha determinado un handler el programa entra en esta sección y ejecuta lo que se indiqu
 
+### Firma de módulo de kernel
 
+Comenzamos escribiendo el código en C que luego es compilado con el Cmakefile
+```c 
+#include <linux/module.h>	/* Requerido por todos los módulos */
+#include <linux/kernel.h>	/* Definición de KERN_INFO */
+MODULE_LICENSE("GPL"); 	/*  Licencia del modulo */
+MODULE_DESCRIPTION("Primer modulo ejemplo");
+MODULE_AUTHOR("Catedra de SdeC");
+
+/* Función que se invoca cuando se carga el módulo en el kernel */
+int modulo_lin_init(void)
+{
+	printk(KERN_INFO "Somos el grupo 7 y venimos a hablar de la firma de módulos de kernel.\n");
+
+	/* Devolver 0 para indicar una carga correcta del módulo */
+	return 0;
+}
+
+/* Función que se invoca cuando se descarga el módulo del kernel */
+void modulo_lin_clean(void)
+{
+	printk(KERN_INFO "Modulo descargado del kernel.\n");
+}
+
+/* Declaración de funciones init y exit */
+module_init(modulo_lin_init);
+module_exit(modulo_lin_clean);
+
+
+
+```
+
+Para firmar el módulo creado debemos primero que nada generar una key usando openssl utilizando el siguiente comando  openssl req -new -newkey rsa:2048 -days 3650 -nodes -x509 -keyout module_sign.priv -outform DER -out module_sign.x509 -subj "/CN=Module Signing Key/"
+
+Donde se genera la key privada (module_sign.priv) y un certificado x509 ( module_sign.x509). Luego, debemos mover estos dos archivos a un directorio específico desde donde se utilizarán para firmar los módulos con el siguiente comando: /usr/src/linux-headers-$(uname -r)/scripts/sign-file sha256 /usr/src/linux-headers-$(uname -r)/certs/module_sign.priv /usr/src/linux-headers-$(uname -r)/certs/module_sign.x509 ./mimodulo.ko
+
+![image](https://github.com/Jolx77/TP4-SistComp/assets/82000054/89381b2e-e9e4-455f-9112-a5fbfe1110a3)
+
+
+Ahora si cargamos el módulo en nuestro kernel y utilizamos el comando modinfo -F signer mimodulo.ko para verificar que este cargado y firmado. 
+
+![image](https://github.com/Jolx77/TP4-SistComp/assets/82000054/09d8c639-b4ed-4c47-853e-fc7bef80f4c2)
+
+Vemos el log del kernel con el mensaje de nuestro grupo y la verificación de estar firmado.
