@@ -270,10 +270,10 @@ La salida del script es enorme pero algunos de los nombres de los módulos dispo
 Link: https://linux-hardware.org/?probe=38438713ba
 
 ### Diff de drivers cargados entre integrantes:
-[Drivers Joaquin](./loaded_modules_joaco.txt)
-[Drivers Federico](./loaded_modules_fede.txt)
-[Drivers Santiago](./loaded_modules_santi.txt)
-[Diferencias entre los integrantes](./diff.txt)
+- [Drivers Joaquin](./loaded_modules_joaco.txt)
+- [Drivers Federico](./loaded_modules_fede.txt)
+- [Drivers Santiago](./loaded_modules_santi.txt)
+- [Diferencias entre los integrantes](./diff.txt)
 
 
 ### Diferencias entre módulo y programa
