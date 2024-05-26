@@ -269,6 +269,13 @@ La salida del script es enorme pero algunos de los nombres de los módulos dispo
 
 Link: https://linux-hardware.org/?probe=38438713ba
 
+### Diff de drivers cargados entre integrantes:
+[Drivers Joaquin](./loaded_modules_joaco.txt)
+[Drivers Federico](./loaded_modules_fede.txt)
+[Drivers Santiago](./loaded_modules_santi.txt)
+[Diferencias entre los integrantes](./diff.txt)
+
+
 ### Diferencias entre módulo y programa
 
 La principal diferencia entre módulos y programas radica en el hecho de que los primero se ejecutan en el espacio del kernel con permisos de superusuario realizando tareas de sistema operativo delicadas. Por otro lado, los programas son ejecutables independientes que realizan diversas tareas a nivel de usuario que pueden comunicarse con el SO a través de ciertos mecanismos (como APIs) con tal de acceder a ciertos recursos de Hardware.
