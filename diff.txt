@@ -1,6 +1,6 @@
 ----Diferencias entre /home/joaquin/Facu/TP4_SISTCOMP/TP4-Sistcomp/TP4-SistComp/loaded_modules_joaco.txt y /home/joaquin/Facu/TP4_SISTCOMP/TP4-Sistcomp/TP4-SistComp/loaded_modules_fede.txt----
---- /home/joaquin/Facu/TP4_SISTCOMP/TP4-Sistcomp/TP4-SistComp/loaded_modules_joaco.txt
-+++ /home/joaquin/Facu/TP4_SISTCOMP/TP4-Sistcomp/TP4-SistComp/loaded_modules_fede.txt
+--- loaded_modules_joaco.txt
++++ loaded_modules_fede.txt
 @@ -1,31 +1,46 @@
 -veth
 -rndis_host
@@ -279,8 +279,8 @@
  wmi
 +video
 ----Diferencias entre /home/joaquin/Facu/TP4_SISTCOMP/TP4-Sistcomp/TP4-SistComp/loaded_modules_joaco.txt y /home/joaquin/Facu/TP4_SISTCOMP/TP4-Sistcomp/TP4-SistComp/loaded_modules_santi.txt----
---- /home/joaquin/Facu/TP4_SISTCOMP/TP4-Sistcomp/TP4-SistComp/loaded_modules_joaco.txt
-+++ /home/joaquin/Facu/TP4_SISTCOMP/TP4-Sistcomp/TP4-SistComp/loaded_modules_santi.txt
+--- loaded_modules_joaco.txt
++++ loaded_modules_santi.txt
 @@ -1,31 +1,3 @@
 -veth
 -rndis_host
@@ -449,8 +449,8 @@
 +pata_acpi
 +video
 ----Diferencias entre /home/joaquin/Facu/TP4_SISTCOMP/TP4-Sistcomp/TP4-SistComp/loaded_modules_fede.txt y /home/joaquin/Facu/TP4_SISTCOMP/TP4-Sistcomp/TP4-SistComp/loaded_modules_santi.txt----
---- /home/joaquin/Facu/TP4_SISTCOMP/TP4-Sistcomp/TP4-SistComp/loaded_modules_fede.txt
-+++ /home/joaquin/Facu/TP4_SISTCOMP/TP4-Sistcomp/TP4-SistComp/loaded_modules_santi.txt
+--- loaded_modules_fede.txt
++++ loaded_modules_santi.txt
 @@ -1,46 +1,3 @@
 -uiehid_generic
 -usbhid
